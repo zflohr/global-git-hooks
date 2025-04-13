@@ -6,3 +6,7 @@ contained herein to be the default hooks for all Git repositories on my local
 filesystem unless there are repository-specific overrides. Thus, the hooks
 contained herein are hooks that I want to run from the majority of my local Git
 repositories.
+
+## Contributing
+
+This is not an open source project.
