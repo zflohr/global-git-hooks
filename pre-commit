@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+run_verbosely_precommits() {
+    local -r DIR=~/github/verbosely/git-hooks/pre-commit
+    [ -d ${DIR} ] && {
+        for program in ${DIR}/*; do
+            [ -f "${program}" ] && "${program}"
+        done
+    }
+}
+
+main() {
+    . $(dirname ${BASH_SOURCE[0]})/shared/notifications.sh
+    print_hook_type_progress "$(basename "${0}")" "start"
+    local -r OWNER=$(
+        git remote get-url "$(
+            git for-each-ref --format="%(upstream:remotename)" $(
+                git symbolic-ref HEAD))" 2> /dev/null |
+        sed --quiet --regexp-extended "
+            s/^(https:\/\/|git@)github\.com(\/|:)([[:lower:]]+).*/\3/p")
+    [ ${OWNER} = "verbosely" ] && run_verbosely_precommits
+    print_hook_type_progress "$(basename "${0}")" "end"
+}
+main
