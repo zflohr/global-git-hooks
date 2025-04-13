@@ -18,7 +18,7 @@ main() {
                 git symbolic-ref HEAD))" 2> /dev/null |
         sed --quiet --regexp-extended "
             s/^(https:\/\/|git@)github\.com(\/|:)([[:lower:]]+).*/\3/p")
-    [ ${OWNER} = "verbosely" ] && run_verbosely_precommits
+    [[ ${OWNER} == "verbosely" ]] && run_verbosely_precommits
     print_hook_type_progress "$(basename "${0}")" "end"
 }
 main
